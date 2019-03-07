@@ -21,8 +21,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-airbnb-style-datepicker/dist/vue-airbnb-style-datepicker.min.css'
 import './assets/scss/custom.scss'
 
-const datepickerOptions = {}
-
 Vue.use(HotelDatePicker)
 Vue.use(DatePicker)
 Vue.use(BootstrapVue)

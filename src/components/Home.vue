@@ -27,7 +27,6 @@
             <b-nav-item href="#">
               <v-icon name="instagram" style="width: 25px;"></v-icon>
             </b-nav-item>
-           
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -116,15 +115,12 @@
                   <span class="mgl-15" >Min. Stay: 7 nights</span>
                 </p>
               </div>
-              
               <div class="col-sm-6">
                 <GmapMap
                   :center="{lat:18, lng:18}"
                   :zoom="7"
                   map-type-id="terrain"
-
                 >
-                
                 </GmapMap>
               </div>
             </div>
@@ -139,7 +135,7 @@
         </b-tabs>
       </b-card>
     </div>
-    
+
     <div class="footer-menu">
       <a href="#">Premier Partner</a>
       <a href="#">Instant Confirmation</a>
@@ -166,28 +162,28 @@
             >Request to Book</b-button>
           </div>
         </div>
-      </div>      
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data () {
     return {
       slide: 0,
       sliding: null,
       tabIndex: 1,
-      rating: 4,
+      rating: 4
     }
   },
   methods: {
-    onSlideStart(slide) {
+    onSlideStart (slide) {
       this.sliding = true
     },
-    onSlideEnd(slide) {
+    onSlideEnd (slide) {
       this.sliding = false
-    },
+    }
   }
 }
 </script>
