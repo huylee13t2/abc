@@ -4,10 +4,10 @@
       <div class="filter">
         <div class="filter-ctn">
           <div class="location">
-            <v-icon name="search" class="icon-search"></v-icon>
-            <b-form-input v-model="text1" type="text" placeholder="Enter your Location" />
+            <b-button v-on:click="searchData"><v-icon name="search" class="icon-search"></v-icon></b-button>
+            <b-form-input v-model="location" type="text" placeholder="Enter your Location" />
           </div>
-          <HotelDatePicker DatePickerID="01" class="width-100 mb-15" />
+          <HotelDatePicker v-model="date_select" DatePickerID="01" class="width-100 mb-15" />
           <div class="guests">
             <v-icon name="users" class="icon-users"></v-icon>
             <b-form-input id="input1" v-model="name" trim />
@@ -26,114 +26,30 @@
         </b-tabs>
       </div>
       <div class="list-ctn">
-        <div class="list-item">
+        <div class="list-item" v-for="item in listData" :key="item">
           <div class="item-image">
-            <img src="https://picsum.photos/1024/480/?image=52" alt="">
+            <img v-bind:src="item.image" alt="">
           </div>
           <div class="item-info">
             <div class="info-product">
               <h6 class="title">
                 <v-icon name="home"></v-icon>
-                <span>Viewed 48 times ...</span>
+                <span>{{ item.times }}</span>
               </h6>
-              <h3>'Pinelodge' - SELF CATERING LODGE - LLANTRAISANT ...</h3>
-              <p class="address">Cabin - 1BR - 1BA -Sleep 2</p>
+              <h3>{{ item.title }}</h3>
+              <p class="address">{{ item.address }}</p>
               <p class="location">
                 <v-icon name="map-pin"></v-icon>
-                16.4 km to Cardiff centre</p>
+                {{ item.location }}</p>
               <div class="chips">
-                <b-badge pill variant="light">Free Cancellation</b-badge>
+                <b-badge pill variant="light" v-for="chip in item.cancellations" :key="chip" >{{ chip }}</b-badge>
               </div>
             </div>
             <div class="info-price">
-              <h3>Exceptional! 5/5</h3>
+              <h3>Exceptional! {{ item.exceptional }}</h3>
               <div class="price-review">
-                <p><strong>$56</strong> per night</p>
-                <star-rating class="ratings" :rating="rating" style="display: inline-block;"></star-rating>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="list-item">
-          <div class="item-image">
-            <img src="https://picsum.photos/1024/480/?image=52" alt="">
-          </div>
-          <div class="item-info">
-            <div class="info-product">
-              <h6 class="title">
-                <v-icon name="home"></v-icon>
-                <span>Viewed 48 times ...</span>
-              </h6>
-              <h3>'Pinelodge' - SELF CATERING LODGE - LLANTRAISANT ...</h3>
-              <p class="address">Cabin - 1BR - 1BA -Sleep 2</p>
-              <p class="location">
-                <v-icon name="map-pin"></v-icon>
-                16.4 km to Cardiff centre</p>
-              <div class="chips">
-                <b-badge pill variant="light">Free Cancellation</b-badge>
-              </div>
-            </div>
-            <div class="info-price">
-              <h3>Exceptional! 5/5</h3>
-              <div class="price-review">
-                <p><strong>$56</strong> per night</p>
-                <star-rating class="ratings" :rating="rating" style="display: inline-block;"></star-rating>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="list-item">
-          <div class="item-image">
-            <img src="https://picsum.photos/1024/480/?image=52" alt="">
-          </div>
-          <div class="item-info">
-            <div class="info-product">
-              <h6 class="title">
-                <v-icon name="home"></v-icon>
-                <span>Viewed 48 times ...</span>
-              </h6>
-              <h3>'Pinelodge' - SELF CATERING LODGE - LLANTRAISANT ...</h3>
-              <p class="address">Cabin - 1BR - 1BA -Sleep 2</p>
-              <p class="location">
-                <v-icon name="map-pin"></v-icon>
-                16.4 km to Cardiff centre</p>
-              <div class="chips">
-                <b-badge pill variant="light">Free Cancellation</b-badge>
-              </div>
-            </div>
-            <div class="info-price">
-              <h3>Exceptional! 5/5</h3>
-              <div class="price-review">
-                <p><strong>$56</strong> per night</p>
-                <star-rating class="ratings" :rating="rating" style="display: inline-block;"></star-rating>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="list-item">
-          <div class="item-image">
-            <img src="https://picsum.photos/1024/480/?image=52" alt="">
-          </div>
-          <div class="item-info">
-            <div class="info-product">
-              <h6 class="title">
-                <v-icon name="home"></v-icon>
-                <span>Viewed 48 times ...</span>
-              </h6>
-              <h3>'Pinelodge' - SELF CATERING LODGE - LLANTRAISANT ...</h3>
-              <p class="address">Cabin - 1BR - 1BA -Sleep 2</p>
-              <p class="location">
-                <v-icon name="map-pin"></v-icon>
-                16.4 km to Cardiff centre</p>
-              <div class="chips">
-                <b-badge pill variant="light">Free Cancellation</b-badge>
-              </div>
-            </div>
-            <div class="info-price">
-              <h3>Exceptional! 5/5</h3>
-              <div class="price-review">
-                <p><strong>$56</strong> per night</p>
-                <star-rating class="ratings" :rating="rating" style="display: inline-block;"></star-rating>
+                <p><strong>{{ item.price }}</strong> per night</p>
+                <star-rating class="ratings" :rating="item.rating" style="display: inline-block;"></star-rating>
               </div>
             </div>
           </div>
@@ -151,9 +67,95 @@ export default {
   data () {
     return {
       msg: 'ahihi',
-      text1: '',
+      location: '',
+      date_select: '',
       rating: 5,
-      name: ''
+      name: '',
+      listData: [
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 12 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin',
+          location: '12.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 12,
+          rating: 2
+        },
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 44 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin - 1BR - 1BA -Sleep 2',
+          location: '56.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '5/5',
+          price: 44,
+          rating: 4
+        },
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 48 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin - 1BR - 1BA -Sleep 2',
+          location: '16.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 56,
+          rating: 0
+        },
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 48 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin - 1BR - 1BA -Sleep 2',
+          location: '16.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 56,
+          rating: 0
+        },
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 48 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin - 1BR - 1BA -Sleep 2',
+          location: '16.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 56,
+          rating: 0
+        },
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 48 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin - 1BR - 1BA -Sleep 2',
+          location: '16.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 56,
+          rating: 0
+        }
+      ]
+    }
+  },
+  methods: {
+    searchData () {
+      this.listData = [
+        {
+          image: 'https://picsum.photos/1024/480/?image=52',
+          times: 'Viewed 12 times in the last 48 hours...',
+          title: '"Pinelodge - SELF CATERING LODGE - LLANTRAISANT ...',
+          address: 'Cabin',
+          location: '12.4 km to Cardiff centre',
+          cancellations: ['Free Cancellation', 'xxx'],
+          exceptional: '1/5',
+          price: 12,
+          rating: 2
+        }
+      ]
     }
   }
 }
