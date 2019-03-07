@@ -99,6 +99,9 @@
 </template>
 
 <script>
+// eslint-disable no-new
+// eslint-disable
+// eslint-disable-next-line
 export default {
   data () {
     return {
